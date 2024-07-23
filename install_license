@@ -24,5 +24,3 @@ chmod 0777 ./license.sh
 sleep 5
 
 /usr/syno/bin/synopkg start SurveillanceStation
-
-echo "0.0.0.0 synosurveillance.synology.com" | sudo tee -a /etc/hosts
