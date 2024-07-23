@@ -1,5 +1,5 @@
 #!/bin/sh
-#bash <(curl -L https://raw.githubusercontent.com/Kaitiz/Surveillance-Station/main/lib/license/remove_license)
+#bash <(curl -L https://raw.githubusercontent.com/jamroszk/SSPatch/main/remove_license)
 
 /usr/syno/bin/synopkg stop SurveillanceStation
 sleep 5
