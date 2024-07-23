@@ -1,5 +1,5 @@
 #!/bin/sh
-#curl -o /tmp/install_license https://github.com/jamroszk/SSPatch/raw/main/install_license; sh /tmp/install_license
+#curl -o /tmp/install_license https://raw.githubusercontent.com/jamroszk/SSPatch/main/install_license; sh /tmp/install_license
 
 /usr/syno/bin/synopkg stop SurveillanceStation
 sleep 5
