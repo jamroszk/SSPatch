@@ -1,7 +1,7 @@
 #!/bin/sh
 # Copyright (c) 2014 Synology Inc. All rights reserved.
 
-SURVEILLANCE_INC_SCRP="/var/packages/SurveillanceStation/scripts/SurveillanceStationCommon"
+SURVEILLANCE_INC_SCRP=/var/packages/SurveillanceStation/scripts/SurveillanceStationCommon
 . ${SURVEILLANCE_INC_SCRP}
 
 SS_BIN_DIR="${SS_TARGET_DIR}/bin"
@@ -23,14 +23,14 @@ EOF
 
 CheckPgsqlService()
 {
-	if [ "$(IsDSM7)" = "true" ]; then
+	if [ true == $(IsDSM7) ]; then
 		echo $(IsSystemdUnitActivated "pqsql")
 	else
 		${SYNO_SERVICE_TOOL} --is-enabled pgsql > /dev/null 2>&1
 		if [ $? -ne ${RET_SYNO_SERVICE_ENABLED} ]; then
-			echo "false"
+			echo false
 		else
-			echo "true"
+			echo true
 		fi
 	fi
 }
@@ -43,11 +43,11 @@ Start()
 
 	UpdateSSDbgLogRotateConf
 
-	if [ "$(IsNonRecordingMode)" = "true" ] && [ "$(IsServiceDataLinkAlive)" = "true" ]; then
-		rm -f "${SS_NON_RECORDING_FILE}"
+	if [ true == $(IsNonRecordingMode) -a true == $(IsServiceDataLinkAlive) ]; then
+		rm -f ${SS_NON_RECORDING_FILE}
 	fi
 
-	if [ "$(IsNonRecordingMode)" = "false" ]; then
+	if [ false == $(IsNonRecordingMode) ]; then
 		CheckToCreateRecDB
 		Ret=$?
 		if [ 0 -ne ${Ret} ]; then
@@ -55,24 +55,24 @@ Start()
 			UpdateNonRecordingMode
 		fi
 
-		if [ ! -f "${SS_REC_DB}" ]; then
+		if [ ! -f ${SS_REC_DB} ]; then
 			SSDebugLog "Recording db not found."
 			UpdateNonRecordingMode
 		fi
 	fi
 
-	if [ "${USE_SQLITE}" = "false" ]; then
-		if [ "$(CheckPgsqlService)" = "false" ]; then
+	if [ ${USE_SQLITE} == false ]; then
+		if [ false == $(CheckPgsqlService) ]; then
 			SSDebugLog "PGSQL is not enabled"
 			exit 1;
 		fi
 
-		if [ "$(HasSSPgsqlData)" = "false" ]; then
+		if [ false == $(HasSSPgsqlData) ]; then
 			SSDebugLog "PGSQL db have not been created yet."
 			exit 1
 		fi
 	else
-		if [ ! -f "${SS_SYSTEM_DB}" ]; then
+		if [ ! -f ${SS_SYSTEM_DB} ]; then
 			SSDebugLog "System db not found."
 			exit 1
 		fi
@@ -140,4 +140,4 @@ main()
 	esac
 }
 
-main "$*"
+main "$@"
